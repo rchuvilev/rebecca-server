@@ -1,10 +1,20 @@
+const requestIp = require('request-ip');
+
 Bun.serve({
 	port: 8000,
-	fetch(req: Request) {
+	async fetch(req: Request) {
 		const url = new URL(req.url);
-		if (url.pathname === '/') {
-			return new Response('Hello World!');
-		}
-		return new Response('Not Found', { status: 404 });
+		// Extract relevant data from the request
+		const requestData = {
+			ip: requestIp.getClientIp(req),
+			url: req.url,
+			method: req.method,
+			headers: req.headers,
+			body: req.method === 'GET' ? null : await req.json(), // Parse body for non-GET requests
+		};
+		// Return the extracted data as a JSON response
+		return new Response(JSON.stringify(requestData, null, 2), {
+			headers: { 'Content-Type': 'application/json' },
+		});
 	},
 });

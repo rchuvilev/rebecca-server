@@ -3,14 +3,16 @@
 	"module": "index.ts",
 	"type": "module",
 	"scripts": {
-		"start": "bun run index.ts",
+		"start": "bun run --watch index.ts",
 		"serve": "",
 		"build": "",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write ."
 	},
-	"dependencies": {},
+	"dependencies": {
+		"request-ip": "^3.3.0"
+	},
 	"devDependencies": {
 		"@types/bun": "latest",
 		"@typescript-eslint/eslint-plugin": "^8.21.0",
